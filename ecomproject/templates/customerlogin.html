@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Customer Login{% endblock %}
+{% block content %}
+<style>
+    .container-fluid{
+        background: url("/static/home/images/market.jfif");
+        margin-left: 0px;
+    }
+    .user_card {
+
+        width: 700px;
+        border-radius: 100px;
+        height: 600px;
+        margin-left:500px;
+        margin-top: auto;
+        margin-bottom: auto;
+        background: rgba(209, 142, 33, 0.795);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+
+    
+      }
+      a :hover{
+          color:aliceblue;
+      }
+</style>
+
+<div class="container-fluid">
+
+    <div class="user_card">
+        <div class="row">
+
+            <div class="col-md-6 mx-auto">
+                <h3 style="text-align: auto; color:rgb(244, 244, 252); font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Customer Login</h3><hr>
+                <form action = "" method= "POST">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <button class="btn btn-danger btn-rounded"  style="margin-left:60px;">Login as customer</button>
+                    {% if error%}
+                    <li style="color:red;">{{error}}</li>
+                    {%endif%}
+
+                </form>
+                <hr>
+                <p style="color: rgb(7, 4, 2); font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">  Forgot Password........? <a href="{% url 'ecoapp:passwordforgot' %}"><u>Reset Your Password</u></a></p>
+                <hr style="border-width: 10px; border-color:rgb(250, 247, 247);">
+                <p style="color: rgb(7, 4, 2); font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">or don't have an account? <a href="{% url 'ecoapp:customerregistration' %}">     <u>Register Here</u></a></p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

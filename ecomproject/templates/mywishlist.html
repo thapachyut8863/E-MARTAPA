@@ -1,0 +1,51 @@
+{%extends "base2.html" %}
+{% load humanize%}
+{% block title%}My Wish{%endblock%}
+{%block content%}
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <h3 style="background-color:#4A4E5A;; color:white; text-align:center;">Your wishlist Items </h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>SN.</th>
+                    
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                    
+                </tr>
+
+            </thead>
+
+            <tbody>
+                {% for wp in mywishlist %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                   
+                    <td><img height="80px" width="100px" src="{{ wp.product.image.url }}" alt="default"></td>
+                    <td>{{wp.product.title}}</td>
+                    <td>{{wp.rate|intcomma}}</td>
+                    <td>{{wp.quantity}}</td>
+                    <td>{{wp.subtotal|intcomma}}</td>
+                    <td>
+                       
+                        <a href="{% url 'ecoapp:managewish' wp.id %}?action=rmv" class="btn btn-danger"> x </a>
+                    </td>
+                </tr>
+                {%endfor%}
+                 
+                
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+{%endblock%}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}{{product.title}}{%endblock%}
+
+{% block content %}
+{%load humanize%}
+<div class = "container">
+    <h5>Product Name: {{product.title}}</h5><hr>
+    <div class="row">
+        <div class="col-md-6 ">
+            
+            <div class="img-hover-zoom">
+                <img src="{{product.image.url}}" alt="default",class="card-img-top">
+            </div>
+            <p style="color:blueviolet; background-color:rgb(37, 250, 176); text-align:center;">Realted Images:</p>
+            <div class="row">
+                {% for pi in product.productimage_set.all %}
+                <div class="col-md-4 p-3">
+                    <a href="{{pi.image.url}}" target="_blank">
+                   
+                    <div class="img-hover-zoom">
+                        <img src="{{pi.image.url}}" alt="default",class="img-fluid" style="height:80px; object-fit:cover;">
+                    </div>
+                    </a>
+
+                </div>
+                {%endfor%}
+                <hr>
+
+            
+        </div>
+        
+
+
+        </div>
+        <div class="col-md-6">
+            <h5 style="font-family:Verdana, Geneva, Tahoma, sans-serif;">{{product.title}}</h5>
+            <h5 style="color:red; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Viewed <u>{{product.view_count}}</u> times by customer</h5>
+            <h5 style="font-family:Arial, Helvetica, sans-serif;">Category: {{product.category}}</h5>
+            <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;;">Price: <strike> Rs.{{product.marked_price|intcomma}}</strike> Rs. {{product.selling_price|intcomma}} </h5>
+           
+            <hr>
+            <p class="text-info">Warranty: {{product.warranty}}</p>
+            <p class="text-info">Return Policy: {{product.return_policy}}</p>
+            <p>{{product.description}}</p>
+            <a href="{% url 'ecoapp:addtocart' product.id %}" class="btn btn-info" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Add To Cart</a>
+        
+        </div>
+        
+
+    </div>
+
+</div>
+{% endblock %}

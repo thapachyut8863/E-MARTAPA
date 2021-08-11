@@ -1,0 +1,65 @@
+{%extends "base2.html" %}
+{% load humanize%}
+{% block title%}My Wish{%endblock%}
+{%block content%}
+{%load static %}
+<style>
+  .container{
+    background: url("/static/home/images/addtocart.png");
+    background-repeat: no-repeat;
+    
+    height: 100%;
+    width: 100%;
+}
+</style>
+<div class = "container">
+
+<div class = "col-8 mx-auto">
+  
+    <h1 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">My Wishlists</h1>
+    
+    <h5 style="margin-left: 0px; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; color:green;">Don't let your wishes fade. Add them to E-Mart's wishlist </h5>
+    <hr>
+    
+    {% if messages %}
+    <div class="alert alert-warning" alert-{{ message.tags }}" role="alert">
+      {% for message in messages  %}
+      {{message|safe}} - <a href="{% url 'ecoapp:wishlist' %}" class="alert-link">Your Wishlist</a>.
+      {% endfor %}
+    </div>
+  {% endif %}
+    <hr>
+    {% if wishlist %}
+    {% for product in wishlist %}
+    <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="default">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{product.title}}</h5>
+              <p class="card-text">{{product.description}}</p>
+              <p class="card-text">Rs.{{product.selling_price|intcomma}}</p>
+              <a href="{% url 'ecoapp:addtocart' product.id %} " class="btn btn-primary" >Add to Cart</a>
+              <a type = "button" class = "btn btn-danger fw500 btn-sm" href="{% url 'ecoapp:user_wishlist' product.id %}"> Remove from wishlist</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {%endfor%}
+    
+    {% else %}
+    <p class="card-text">No products have been added to your wishlists</p>
+
+
+
+    {%endif%}
+
+
+
+    
+</div>
+</div>
+{%endblock%}

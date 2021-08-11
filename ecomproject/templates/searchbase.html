@@ -1,0 +1,35 @@
+{% extends "base2.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if messages %}
+        <div class="alert alert-warning" alert-{{ message.tags }}" role="alert">
+            {% for message in messages  %}
+                {{message|safe}} - <a href="{% url 'ecoapp:wishlist' %}" class="alert-link">Your Wishlist</a>.
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>  Your Search Results for"<span class="text-danger"> {{request.GET.keyword}}</span>" </h3>
+                <hr>
+                {% for result in results%}
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="img-hover-zoom">
+                            <img src="{{result.image.url}}" alt="default",class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4><a href="{% url 'ecoapp:productdetailpage2' result.slug %}">{{result.title}}</a></h4>
+                        <p>{{result.description}}</p>
+                        <a href="{% url 'ecoapp:addtocart' result.id %}" class="btn btn-primary" >Add to Cart</a>
+                        <a href="{%url 'ecoapp:user_wishlist' result.id %} " class="btn btn-danger" ><i class="heart fa fa-heart-o"></i>Favorite</a>
+
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+{% endblock %}

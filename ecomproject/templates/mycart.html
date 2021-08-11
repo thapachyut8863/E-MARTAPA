@@ -1,0 +1,70 @@
+{%extends "base2.html" %}
+{% load humanize%}
+{% block title%}My Cart{%endblock%}
+{%block content%}
+<style>
+    .container{
+        background: url("/static/home/images/addtocart.png");
+        background-repeat: no-repeat;
+        
+        height: 100%;
+    }
+    
+</style>
+<div class="container">
+    {%load static%}
+<div class="row">
+    <div class="col-md-12">
+        <h4>My Cart</h4><hr>
+        
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>SN.</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                {% for cp in cart.cartproduct_set.all %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img height="80px" width="100px" src="{{ cp.product.image.url }}" alt="default"></td>
+                    <td>{{cp.product.title}}</td>
+                    <td>{{cp.rate|intcomma}}</td>
+                    <td>{{cp.quantity}}</td>
+                    <td>{{cp.subtotal|intcomma}}</td>
+                    <td>
+                        <a href="{% url 'ecoapp:managecart' cp.id %}?action=inc" class="btn btn-primary"> + </a>
+                        <a href="{% url 'ecoapp:managecart' cp.id %}?action=dcr" class="btn btn-warning"> - </a>
+                        <a href="{% url 'ecoapp:managecart' cp.id %}?action=rmv" class="btn btn-danger"> x </a>
+                    </td>
+                </tr>
+                {%endfor%}
+                <tr>
+                    <th colspan="4" class='text-right'>Total</th>
+                    <th>Rs.{{ cart.total|intcomma }}</th>
+                    {% if cart.cartproduct_set.all%}
+                    <th><a href="{% url 'ecoapp:emptycart'%}" class= "btn btn-danger">Empty Cart</a></th>
+                    {%endif%}
+                </tr>
+                {% if cart.cartproduct_set.all%}
+                <tr>
+                    <th><a class="btn btn-info" href="{% url 'ecoapp:checkout'%}">Checkout</a></th>
+                </tr>
+                {%endif%}
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+{%endblock%}

@@ -1,0 +1,42 @@
+{% extends "adminpages/adminbase.html" %}
+{%load humanize%}
+{% block title %}All Orders{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="font-family:Georgia, 'Times New Roman', Times, serif;">Orders history</h3>
+            <hr>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>SN</th>
+                            <th>Order ID </th>
+                            <th>Customer</th>
+                            <th>Ordered On</th>
+                            <th>In Queue Orders</th>
+                            <th>Amount</th>
+                            <th>Order Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in allorders %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="{% url 'ecoapp:orderdetailpage' order.id%}">#ORDER_{{order.id}}</a></td>
+                            <td>{{order.order_by}}</td>
+
+                            <td>{{order.created_at}}</td>
+                            <td>{{order.created_at|timesince}} ago</td>
+
+                            <td>Rs. {{order.total|intcomma}}</td>
+                            <td>{{order.order_status}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+{%endblock%}

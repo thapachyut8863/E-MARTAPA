@@ -1,0 +1,69 @@
+{% extends "adminpages/adminbase.html" %}
+{%load humanize%}
+{% block title %}Admin Home{% endblock %}
+
+{%block content%}
+<div class="contanier" style="background-color: rgb(57, 55, 55);">
+    <div class="row">
+
+        
+        <div class="col-md-12">
+            
+          
+            
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile.no</th>
+                        <th style="width:300px;">Messsages</th>
+                        <th>Reponse </th>
+                        
+                    </tr>
+    
+                </thead>
+    
+                <tbody>
+                    {% for me in message %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        
+                        <td>{{me.identity}}</td>
+                        <td>{{me.email}}</td>
+                        <td>{{me.number}}</td>
+                        <td>{{me.message}}</td>
+                        <td>
+                            <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"> <i class="fa fa-envelope" style="font-size:30px;color:red"></i> </a>
+                            
+                        </td>
+                    </tr>
+
+                       
+                    </tr>
+                    {%endfor%}
+                   
+    
+    
+                </tbody>
+            </table>
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%endblock%}

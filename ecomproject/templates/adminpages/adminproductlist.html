@@ -1,0 +1,47 @@
+{% extends "adminpages/adminbase.html" %}
+{% block title %}Product Details{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 style="font-family: Georgia, 'Times New Roman', Times, serif;">All products in  E-MART</h3>
+            
+                <hr>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th> SN</th>
+                            <th>Product Title</th>
+                            <th>Image</th>
+                            <th>Prices</th>
+                            <th>Views Count</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in allproducts %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{p.title}}</td>
+                            <td><img src="{{p.image.url}}" style="height:50px;" alt="default"></td>
+                            <td>{{p.selling_price}}</td>
+                            <td>{{p.view_count}}</td>
+                            <td>
+                                <a href="{% url 'ecoapp:product-update' p.id %}"> <i class="fa fa-edit" style="font-size:28px"></i></a>
+                                <a href="{% url 'ecoapp:product-delete' p.id%}"> <i class="fa fa-trash-o" style="font-size:28px"></i></a>
+                                
+                                
+                            </td>
+                            
+
+                        </tr>
+
+
+                        {%endfor%}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

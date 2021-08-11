@@ -1,0 +1,139 @@
+{% extends 'base2.html' %}
+{% block title %}{{product.title}}{%endblock%}
+
+{% block content %}
+{%load humanize%}
+<div class = "container">
+    {% if messages %}
+    <div class="alert alert-warning" alert-{{ message.tags }}" role="alert">
+      {% for message in messages  %}
+        {{message|safe}} - <a href="{% url 'ecoapp:wishlist' %}" class="alert-link">Your Wishlist</a>.
+      {% endfor %}
+    </div>
+  {% endif %}
+    <h5>Product Name: {{product.title}}</h5><hr>
+    <div class="row">
+        <div class="col-md-3">
+            
+            <div class="img-hover-zoom">
+                <img src="{{product.image.url}}" alt="default",class="card-img-top">
+            </div>
+            <p style="color:blueviolet; background-color:rgb(37, 250, 176); text-align:center;">Realted Images:</p>
+            <div class="row">
+                {% for pi in product.productimage_set.all %}
+                <div class="col-md-4 p-3">
+                    <a href="{{pi.image.url}}" target="_blank">
+                   
+                    <div class="img-hover-zoom">
+                        <img src="{{pi.image.url}}" alt="default",class="img-fluid" style="height:80px; object-fit:cover;">
+                    </div>
+                    </a>
+
+                </div>
+                {%endfor%}
+                <hr>
+
+            
+        </div>
+        
+
+
+        </div>
+        <div class="col-md-4">
+            <h5>{{product.title}}</h5>
+            <h5 style="color:red">Viewed {{product.view_count}} times by other customer</h5>
+            <h5>Category: {{product.category}}</h5>
+            <h5>Price: Rs. {{product.selling_price|intcomma}} </h5>
+            
+            
+            
+            {% if user.id is not None %}
+
+            <a href="{% url 'ecoapp:addtocart' product.id %}" class="btn btn-info">Add To Cart</a>
+            <a href="{% url 'ecoapp:user_wishlist' product.id %} " class="btn btn-danger" ><i class="heart fa fa-heart-o"> Add To Wishlist</i></a>
+
+            
+
+            {% endif%}
+            <hr>
+            <p class="text-info">Warranty: {{product.warranty}}</p>
+            <p class="text-info">Return Policy: {{product.return_policy}}</p>
+            <p>{{product.description}}</p>
+        
+        </div>
+        <div class="col-md-5">
+            <h4 class="text-uppercase">Write Your Review</h4>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form class="review-form" action="{% url 'ecoapp:addcomment' product.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input name="subject" class="input" type="text" placeholder="Your subject" />
+                </div>
+                <div class="form-group">
+                    <textarea name="comment" class="input" placeholder="Your review"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="input-rating">
+                        <strong class="text-uppercase">Your Rating: </strong>
+                        <div class="stars">
+                            <input type="radio" id="star5" name="rate" value="5" /><label for="star5"></label>
+                            <input type="radio" id="star4" name="rate" value="4" /><label for="star4"></label>
+                            <input type="radio" id="star3" name="rate" value="3" /><label for="star3"></label>
+                            <input type="radio" id="star2" name="rate" value="2" /><label for="star2"></label>
+                            <input type="radio" id="star1" name="rate" value="1" /><label for="star1"></label>
+                        </div>
+                    </div>
+                </div>
+                {% if user.id is not None %}
+                    <button class="primary-btn">Submit</button>
+                {% else %}
+                    You must be logged in to post a review
+                {% endif %}
+                
+            </form><hr>
+            <h5 style="color:rgb(15, 15, 22); font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;background-color:rgb(37, 250, 176)"><span>Customers Reviews</span></h5><hr>
+            
+            <div id="tab2" class="tab-pane fade in" ></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="product-reviews" style= "height:200px; overflow-y: scroll;">
+                            {% for rs in comments%}
+                                <div class="single-review">
+                                    <div class="review-heading">
+                                        <div><a href="#"><i class="fa fa-user-o"></i> {{ rs.user.username }}</a> </div>
+                                        <div class="review-rating pull-right">
+                                            <i class="fa fa-star{% if rs.rate < 1 %}-o empty{% endif %}"></i>
+                                            <i class="fa fa-star{% if rs.rate < 2 %}-o empty{% endif %}"></i>
+                                            <i class="fa fa-star{% if rs.rate < 3 %}-o empty{% endif %}"></i>
+                                            <i class="fa fa-star{% if rs.rate < 4 %}-o empty{% endif %}"></i>
+                                            <i class="fa fa-star{% if rs.rate < 5 %}-o empty{% endif %}"></i>
+                                        </div>
+                                        <div><b>{{ rs.subject }}</b> </div>
+                                        <div><a href="#"><i class="fa fa-clock-o"></i> {{ rs.create_at}}</a></div>
+
+                                        
+                                    </div>
+                                    <div class="review-body">
+                                        <p>{{ rs.comment }}</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

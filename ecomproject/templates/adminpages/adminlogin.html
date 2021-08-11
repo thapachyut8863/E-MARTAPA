@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+    .container-fluid{
+        background: url("/static/home/images/admin11.jfif");
+        margin-left: 0px;
+
+        
+    }
+    .user_card {
+        width: 610px;
+        border-radius: 100px;
+        height: 600px;
+        margin-left: 500px;
+        margin-top: px;
+        margin-bottom: auto;
+        background: rgba(242, 170, 54, 0.795);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+    
+      }
+</style>
+
+<div class="container-fluid">
+    {%load static%}
+    <div class="row">
+        <div class ="user_card">
+            <div class="col-md-6 mx-auto">
+             
+                <h3 style="text-align: auto; color:white; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif" >Admin Login</h3><hr>
+                <form action = "" method= "POST">
+                    {%csrf_token%}
+                    
+                    {{form.as_p}}<hr>
+                    <button class="btn btn-danger">Login as Admin</button>
+                    {% if error%}
+                    <li style="color:red;">{{error}}</li>
+                    {%endif%}
+
+                </form>
+            
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Customer Registration{% endblock %}
+{% block content %}
+
+<style>
+    .errorlist{
+        color:red;
+    }
+    a :hover{
+        color:aliceblue;
+    }
+    
+    .container-fluid{
+            background: url("/static/home/images/market.jfif" );
+            background-size:cover;
+            
+            margin-left: 0px;
+        }
+    
+    .user_card {
+        width: 800px;
+        margin-left: 410px;
+        margin-top: auto;
+        margin-bottom: auto;
+        background: rgba(209, 142, 33, 0.795);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+    
+      }
+
+     
+      
+</style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class = "user_card">
+                <div class="col-md-6 mx-auto">
+                    <h3 style=" color:rgb(246, 246, 240); font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Create Account</h3><hr>
+                    <form action = "" method= "POST">
+                        {%csrf_token%}
+                        {{form.as_p}}<hr>
+                        <button class="btn btn-danger btn-rounded" style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Register as Customer</button>
+
+                    </form>
+                    <hr style="border-width: 10px; border-color:black;">
+                    <p style="color:black; font-family:Verdana, Geneva, Tahoma, sans-serif">Already have an account? <a href="{% url 'ecoapp:customerlogin' %}">Login Here</a></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

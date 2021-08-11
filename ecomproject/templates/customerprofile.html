@@ -1,0 +1,58 @@
+{% extends "base2.html" %}
+{% load humanize%}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+{%load static%}
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Your Profile</h2>
+        
+          <img src="{%static 'home/images/user11.jfif' %}"style="height:100px; width:100px; border-radius: 50%; margin-left:120px; ">
+        
+        <ul>
+            <li><span style="font-size: 20px;">Name:  {{customer.full_name}} </span></li>
+            <li><span style="font-size: 20px;">UserName: {{customer.user.username}}</span></li>
+            <li><span style="font-size: 20px;">Email: {{customer.user.email}}</span></li>
+            <li><span style="font-size: 20px; ">Address: {{customer.address}}</span></li>
+            <li><span style="font-size: 20px; ">Joined On: {{customer.joined_on}}</span></li>
+            <hr>
+            <button class="btn btn-primary" style="font-size:22px; color:aliceblue; margin-left:40px;"><a href="{% url 'ecoapp:wishlist'%}" style="color:aliceblue;"> <i class="fa fa-shopping-cart" style="font-size:20px;"></i> My Wishlist</a></button>
+            <button class="btn btn-danger" style="font-size:22px; color:aliceblue; margin-left:40px;"><a href="{% url 'ecoapp:customerlogout'%}" style="color:aliceblue;"><i class="fa fa-sign-out"></i> Logout</a></button>
+            
+            
+        </ul> 
+      
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome ! {{customer.full_name }}  Have a nice day.</div>  
+        <div class="info" style= "height:600px; overflow-y: scroll;">
+          <h3 style="background:#4A4E5A;color:white">Previous Orders</h3>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Order ID</th>
+                                <th>Amount</th>
+                                <th>Ordered On</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for order in orders%}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td><a href="{% url 'ecoapp:customerorderdetail' order.id%}">Order_ID{{order.id}}</a></td>
+                                <td>Rs.{{order.total|intcomma}}</td>
+                                <td>{{order.created_at|timesince}} ago</td>
+                                <td style="background-color:aquamarine">{{order.order_status}}</td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+      </div>
+    </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,64 @@
+{% extends 'base2.html' %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+{% load humanize%}
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Items in the Cart</h3>
+            
+            <div>
+
+                <table class="table" style="margin-top: 30px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>SN.</th>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Rate</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            
+                        </tr>
+        
+                    </thead>
+        
+                    <tbody>
+                        {% for cp in cart.cartproduct_set.all %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><img height="80px" width="100px" src="{{ cp.product.image.url }}"></td>
+                            <td>{{cp.product.title}}</td>
+                            <td>{{cp.rate}}</td>
+                            <td>{{cp.quantity}}</td>
+                            <td>Rs.{{cp.subtotal|intcomma}}</td>
+                        </tr>
+                        {%endfor%}
+                        <tr>
+                            <th colspan="4" class="text-right">Total</th>
+                            <th>Rs.{{cart.total|intcomma}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-danger" href="{% url 'ecoapp:mycart'%}">Update Cart</a>
+
+        </div>
+        <div class="col-md-4">
+            <h3 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Checkout Form</h3>
+            <form action="" method=POST style="margin-top: ;">
+                {% csrf_token %}
+                
+                {{ form.as_p }}<hr>
+                
+               
+                <button class = "btn btn-danger">Place Order</button>
+                
+
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,51 @@
+{% extends "base2.html" %}
+{% load humanize%}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Your Profile</h2>
+        <img src="img_avatar.png" alt="" style="width:200px">
+        <ul>
+            <li><h4><span>Name:  </span>{{customer.full_name}}</h4></li>
+            <li><h4><span>UserName: </span>{{customer.user.username}}</h4></li>
+            <li><h4><span>Email: </span>{{customer.user.email}}</h4></li>
+            <li><h4><span>Address: </span>{{customer.address}}</h4></li>
+            <li><h4><span>Joined On: </span>{{customer.joined_on}}</h4></li>
+            
+        </ul> 
+      
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome!! Have a nice day.</div>  
+        <div class="info">
+          <h3 style="background:pink;color:red">Previous Orders</h3>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Order ID</th>
+                                <th>Amount</th>
+                                <th>Ordered On</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for order in orders%}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td><a href="{% url 'ecoapp:customerorderdetail' order.id%}">Order_ID{{order.id}}</a></td>
+                                <td>Rs.{{order.total|intcomma}}</td>
+                                <td>{{order.created_at|timesince}} ago</td>
+                                <td style="background-color:aquamarine">{{order.order_status}}</td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+      </div>
+    </div>
+</div>
+
+{%endblock%}
